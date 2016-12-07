@@ -1,0 +1,10 @@
+model {
+    components {
+        main(NativeExecutableSpec) {
+            baseName "${project.baseName}"
+            sources {
+                c.lib project: ':libhello', library: 'main', linkage: 'shared'
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+// Useful gradle native documentation : https://docs.gradle.org/current/userguide/native_software.html
+
+// Global project configuration
+allprojects {
+    group 'c-gradle'
+    version '1.0-SNAPSHOT'
+}
+
+// Subprojects configuration
+subprojects {
+    // Plugins
+    apply plugin: 'c'
+
+    // Project properties
+    ext.baseName = "${project.name}-${project.version}"
+
+    // Project config
+    model {
+        // Build types
+        buildTypes {
+            debug
+            release
+        }
+
+        // Binaries configuration
+        binaries {
+            all {
+                // gcc config
+                if(toolChain in Gcc) {
+                    // Always output all warnings
+                    cCompiler.args '-Wall'
+
+                    // Debug configuration
+                    if(buildType == buildTypes.debug) {
+                        cCompiler.args '-g'
+                        cCompiler.define 'DEBUG'
+                    }
+                    // Release configuration
+                    else if(buildType == buildTypes.release) {
+                        cCompiler.args '-O3'
+                    }
+                }
+            }
+        }
+    }
+}

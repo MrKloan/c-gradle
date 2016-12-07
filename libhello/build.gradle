@@ -1,0 +1,7 @@
+model {
+    components {
+        main(NativeLibrarySpec) {
+            baseName "${project.baseName}"
+        }
+    }
+}
